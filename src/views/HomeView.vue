@@ -1,18 +1,44 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+<p>Abjv</p>
+<button @click="Game()">Game</button>
   </div>
 </template>
-
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Parse from 'parse'
+import { defineComponent ,onMounted} from 'vue'
 
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+
+export default defineComponent({
+  setup() {
+    onMounted(()=>{
+      console.log("hi")
+      // await Parse.Cloud.run("hello")
+    })
+    const Game = ()=>{
+        const GameScore = Parse.Object.extend("GameScore");
+const gameScore = new GameScore();
+
+gameScore.set("score", 1337);
+gameScore.set("playerName", "Sean Plott");
+gameScore.set("cheatMode", false);
+
+gameScore.save()
+.then((gameScore) => {
+  // Execute any logic that should take place after the object is saved.
+  // alert('New object created with objectId: ' + gameScore);
+  console.log(gameScore)
+}, (error) => {
+  // Execute any logic that should take place if the save fails.
+  // error is a Parse.Error with an error code and message.
+  alert('Failed to create new object, with error code: ' + error.message);
+});
+      }
+
+      return{
+        Game
+      }
+  },
+  
+})
 </script>
